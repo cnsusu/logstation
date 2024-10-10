@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"log"
+	"logstation/client"
 	"logstation/config"
 	"logstation/routers"
 	"net/http"
@@ -27,7 +28,10 @@ func main() {
 	router := gin.Default()
 	store := memstore.NewStore([]byte(uuid.New().String()))
 	router.Use(sessions.Sessions("LogStationSession", store))
-	routers.InitRouter(router)
+
+	hub := client.NewHub()
+	go hub.Run()
+	routers.InitRouter(router, hub)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", config.Config.Server.Port.HttpPort),
