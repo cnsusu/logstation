@@ -1,0 +1,6 @@
+server:
+  name: "logstation"
+  port:
+    httpPort: "8690"
+  loginName: "admin"
+  loginPass: "123456"

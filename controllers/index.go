@@ -8,12 +8,12 @@ import (
 	"runtime/debug"
 )
 
-func HandleLogin(c *gin.Context) {
+func HandleIndex(c *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
 			log.Printf("err=%s, stack=%s", fmt.Sprint(err), string(debug.Stack()))
 		}
 	}()
 
-	c.HTML(http.StatusOK, "login.html", gin.H{})
+	c.HTML(http.StatusOK, "index.html", gin.H{})
 }

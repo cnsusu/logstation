@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>LogStation</title>
+    <link href="/assets/index.css" rel="stylesheet">
+    <script src="/assets/ansi_up.min.js"></script>
+    <script src="/assets/app.js"></script>
+</head>
+<body class="theme-black">
+<div id="screenIcon">
+    <svg onclick="toggleFullScreen()" id="fullScreenIcon" class="bi bi-arrows-fullscreen" width="1em" height="1em" fill="currentColor">
+        <use xlink:href="#fullscreen-icons"></use>
+    </svg>
+</div>
+<pre id="fileData" class="log-display"><ol id="list"></ol></pre>
+
+<div id="status_bar">
+    <div class="log-info">
+        <span>log file: <label title="{{.F.Path}}">{{.F.Alias}}</label></span>
+    </div>
+    <div class="controls">
+        <a href="javascript:void(0);" onclick="closeConn()" class="disconnect">disconnect (ESC)</a>
+        <span>|</span>
+        <a href="javascript:void(0);" onclick="clearScreen()" class="clear">clear (Ctrl+L)</a>
+        <span>|</span>
+        <a href="javascript:void(0);" onclick="pause()" id="pauseBtn" class="pause">pause (Space)</a>
+        <label>theme:</label>
+        <select id="theme" onchange="changeTheme(this)">
+            <option value="white">white</option>
+            <option value="black">black</option>
+        </select>
+        <label>tail option -n:</label>
+        <select id="tailOptionN" onchange="changeTailOption(this)">
+            <option value="">default</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+        </select>
+        <label>max rows:</label>
+        <select id="maxLines" onchange="changeMaxLines(this)">
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+        </select>
+        <label>switch log file:</label>
+        <select onchange="switchLogFile(this)">
+            {{ range .FS }}
+            <option value="{{.PathMd5}}" {{if eq .PathMd5 .F.PathMd5}} selected {{end}}>{{.Alias}}</option>
+            {{ end }}
+        </select>
+    </div>
+</div>
+</body>
+</html>
